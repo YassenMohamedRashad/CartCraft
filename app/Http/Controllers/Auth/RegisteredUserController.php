@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,15 +14,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Nnjeim\World\WorldHelper;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(WorldHelper $world)
     {
-        return view('auth.register');
+        // return $world->countries()->data;
+        return view('auth.register')->with([
+            "countries" => $world->countries()->data,
+
+        ]);
     }
 
     /**
@@ -28,26 +35,44 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'image' => 'bail|image|mimes:png,jpg,jpeg,webp',
+            'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'BirthDate' => ['required','date'],
-            "phone" => ['required'],
-            'gender' => ['required'],
+            'BirthDate' => ['required','date', 'before:' . Carbon::now()->subYears(10)->toDateString()],
+            'country' => 'required|string',
+            "phone" => 'required|regex:/^\+?(\d{1,3})?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/',
+            'gender' => 'required|boolean',
             'address' => ['required','string','max:255'],
+        ],[
+            'BirthDate.before' => 'you need to be more than 10 years old',
+            'country.required' => 'please choose country',
         ]);
 
+        try {
+            if ($request->has('image')) {
+                $file = $request->file('image');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time() . random_int(1, 10) . '.' . $extention;
+                $file->move(public_path('images/profile_images'), $filename);
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
         $user = User::create([
+            'image' => $filename?? null,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'BirthDate' => $request->BirthDate,
+            'age' => (date('Y') - date('Y',strtotime($request->BirthDate))),
             'phone' => $request->phone,
             'gender' => $request->gender,
-            'address' => $request->address,
+            'address' => $request->country ."-". $request->address,
         ]);
 
         event(new Registered($user));
