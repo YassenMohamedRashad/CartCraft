@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
             'image' => 'bail|image|mimes:png,jpg,jpeg,webp',
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::default()],
             'BirthDate' => ['required','date', 'before:' . Carbon::now()->subYears(10)->toDateString()],
             'country' => 'required|string',
             "phone" => 'required|regex:/^\+?(\d{1,3})?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/',
