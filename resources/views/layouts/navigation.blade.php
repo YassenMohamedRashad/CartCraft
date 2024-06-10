@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
         <a href="{{route("home")}}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                <x-application-logo class="w-[40px] h-[40px]"/>
+                <x-application-logo class="w-[40px] h-[40px]" />
             </span>
         </a>
 
@@ -13,9 +13,9 @@
             </svg>
         </button>
 
-        <form action="/" method="get" class="w-[300px] hidden md:block">
+        <form action="/" method="get" class="hidden md:block">
             <div class="relative flex items-center justify-end">
-                <x-text-input class="inline w-full" placeholder="Search for products" name="search" />
+                <x-text-input class="inline w-[300px] focus:w-[500px]" placeholder="Search for products" name="search" />
                 <button class="absolute me-2" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 256 256">
                         <path fill="currentColor" d="m229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32M40 112a72 72 0 1 1 72 72a72.08 72.08 0 0 1-72-72" />
@@ -46,21 +46,21 @@
 
 
                             <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
-                                <img src="{{asset('images/profile_images/'.Auth()->user()->image)}}" class="rounded-full w-10 h-10" alt="Profile Image">
+                                <img src="{{Auth()->user()->image}}" class="rounded-full w-8 h-8" alt="Profile Image">
                             </button>
-                            <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-200 rounded-lg shadow w-44">
+                                <div class="px-4 py-3 text-sm text-gray-900 ">
                                     <div>{{Auth()->user()->name}}</div>
                                     <div class="font-medium truncate">{{Auth()->user()->email}}</div>
                                 </div>
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                <ul class="py-2 text-sm text-gray-700 " aria-labelledby="dropdownUserAvatarButton">
                                     <li>
-                                        <a href="{{route('profile.edit')}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">profile</a>
+                                        <a href="{{route('profile.edit')}}" class="block px-4 py-2 hover:bg-gray-200 ">profile</a>
                                     </li>
 
                                 </ul>
                                 <div class="py-2">
-                                    <x-logout class="w-full text-red-600 px-4 py-2 text-sm hover:bg-gray-600" />
+                                    <x-logout class="w-full text-red-600 px-4 py-2 text-sm hover:bg-gray-200" />
                                 </div>
                             </div>
 
@@ -84,13 +84,12 @@
                     <li>
                         <form action="/" method="get" class="w-[300px] block md:hidden">
                             <div class="relative flex items-center justify-end">
-                                <x-text-input class="inline w-full" placeholder="Search for products" />
+                                <x-text-input class="inline w-full" placeholder="search for products" />
                                 <button class="absolute me-2" type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 256 256">
                                         <path fill="currentColor" d="m229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32M40 112a72 72 0 1 1 72 72a72.08 72.08 0 0 1-72-72" />
                                     </svg>
                                 </button>
-
                             </div>
 
                         </form>
@@ -98,9 +97,11 @@
                 </ul>
             </div>
 
-
-
         </div>
 
+
+        <div>
+            {{__('main.search')}}
+        </div>
     </div>
 </nav>
