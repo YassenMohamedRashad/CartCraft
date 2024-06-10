@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
         <a href="{{route("home")}}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                <x-application-logo />
+                <x-application-logo class="w-[40px] h-[40px]"/>
             </span>
         </a>
 

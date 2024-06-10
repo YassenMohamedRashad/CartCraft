@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         View::share([
-            "dark_color" => '#6A94B4',
+            "dark_color" => '#3949AB',
             "extra_dark" => '#426C8C',
             "light_color" => '#80B9AD',
             "white" => 'white',

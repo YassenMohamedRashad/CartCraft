@@ -3,5 +3,5 @@
 @section("Title","CartCraft")
 
 @section("content")
-<h1>Home</h1>
+@include("User.home.sec1")
 @endsection

@@ -1,3 +1,3 @@
-<button type="submit" class="text-black bg-white px-10 hover:border hover:border-white hover:bg-transparent hover:text-white transition p-2 rounded-lg" {{$attributes->merge([])}}>
+<button type="submit" class="text-white bg-[{{$dark_color}}] w-full px-10 hover:border hover:border-[{{$dark_color}}] hover:bg-transparent hover:text-[{{$dark_color}}] transition p-2 rounded-lg" {{$attributes->merge([])}}>
     {{$slot}}
 </button>

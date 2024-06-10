@@ -1,3 +1,4 @@
-<span {{$attributes->merge(['class'=>"font-extrabold text-[".$dark_color."]" ])}} >
-    Cart<span class="">Craft</span>
-</span>
+<div {{$attributes->merge(["class"=>"flex align-center items-center"])}} >
+    <img src="{{asset('images/design/Logo/store.png')}}" class="w-full" alt="">
+    <span class="text-[{{$dark_color}}] font-bold text-sm">CartCraft</span>
+</div>
